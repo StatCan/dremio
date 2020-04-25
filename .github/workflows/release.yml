@@ -78,7 +78,7 @@ jobs:
           ingress:
             enabled: true
             hosts:
-              - host: "dremio.covid.cloud.statcan.ca"
+              - host: "dremio.${{ secrets.DOMAIN_NAME }}"
                 paths:
                   - "/*"
             annotations:
