@@ -58,10 +58,11 @@ jobs:
         namespace: ${{ env.NAMESPACE }}
 
     # Scan image for vulnerabilities
-    - name: Scan image for vulnerabilities
-      uses: docker://docker.io/aquasec/trivy:0.2.1
+    - uses: Azure/container-scan@v0
       with:
-        args: --cache-dir /var/lib/trivy --severity CRITICAL --no-progress ${{ env.REGISTRY_NAME }}.azurecr.io/dremio:${{ github.sha }}
+        image-name: ${{ env.REGISTRY_NAME }}.azurecr.io/dremio:${{ github.sha }}
+        severity-threshold: CRITICAL
+        run-quality-checks: false
 
     # Clone the Helm chart
     - run: |
@@ -84,7 +85,7 @@ jobs:
             repository: "${{ env.REGISTRY_NAME }}.azurecr.io/dremio"
             tag: "${{ github.sha }}"
           ingress:
-            enabled: true
+            enabled: false
             hosts:
               - host: "dremio.${{ secrets.DOMAIN_NAME }}"
                 paths:
