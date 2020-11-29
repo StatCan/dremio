@@ -77,7 +77,6 @@ jobs:
       with:
         release: 'dremio'
         namespace: 'dremio'
-        tillerNamespace: 'dremio'
         chart: './charts/stable/dremio'
         token: '${{ github.token }}'
         values: |
